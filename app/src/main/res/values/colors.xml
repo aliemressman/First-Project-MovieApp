@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="main_color">#151827</color>
+    <color name="button_color_orange">#D88A16</color>
+    <color name="baslik_color_yellow">#CCBC35</color>
+    <color name="dark_blue">#020A35</color>
+    <color name="girisekrani_color">#151927</color>
+</resources>

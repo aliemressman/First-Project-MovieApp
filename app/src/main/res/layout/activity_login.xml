@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.LoginActivity">
+
+    <ScrollView
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giriş Yap"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:layout_marginTop="80dp"
+                android:layout_marginStart="30dp" />
+            <EditText
+                android:id="@+id/kullaniciEdt"
+                style="@android:style/Widget.Button"
+                android:textColor="#E3E2E2"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:hint="Kullanıcı Adı"
+                android:textColorHint="@color/white"
+                android:textSize="20dp"
+                android:background="@drawable/login_color"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="100dp"
+                >
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/sifreEdt"
+                style="@android:style/Widget.Button"
+                android:textColor="#E3E2E2"
+                android:textSize="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:hint="Şifre"
+                android:textColorHint="@color/white"
+                android:background="@drawable/login_color"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                >
+
+            </EditText>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Şifrenizi mi unuttunuz?"
+                android:textColor="#E3E2E2"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/loginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giriş Yap"
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="#E3E2E2"
+                android:background="@drawable/button_orange_background"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hesabınız mı Yok?"
+                android:textSize="16sp"
+                android:textColor="#E3E2E2"
+                android:textAlignment="center"
+                android:layout_marginTop="30dp"
+                />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Üye Ol"
+                android:textSize="16sp"
+                android:textColor="#E3E2E2"
+                android:textAlignment="center"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
