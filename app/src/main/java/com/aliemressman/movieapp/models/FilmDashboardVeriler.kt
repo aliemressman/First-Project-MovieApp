@@ -6,6 +6,9 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
+// Entity = Room içinde veritabanında oluşturulan bir tabloyu temsil eder.
+// ColumnInfo = Tek sütundan fazla oluşturulmasını istiyorsanız başına eklemeniz gerekir.
+// SerializedName = Jsondaki key değerinden farklı bir isim kullanacaksak kullanırız.
 data class FilmDashboardVeriler(
     @ColumnInfo(name ="page")
     @SerializedName("page")
@@ -22,4 +25,6 @@ data class FilmDashboardVeriler(
 ){
     @PrimaryKey(autoGenerate = true)
     var uuid : Int = 0
+    // PrimaryKey = Veritabanında bir tablonun birincil anahtarını temsil eder.
+    // autoGenerate = true = Otomatik artan bir sütun oluşturur.
 }

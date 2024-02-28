@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/main_color">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Üye Ol"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:layout_marginTop="80dp"
+            android:layout_marginStart="30dp" />
+
+        <EditText
+            android:id="@+id/epostaText"
+            style="@android:style/Widget.Button"
+            android:textColor="#E3E2E2"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint=" E-posta Adresi"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/login_color"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="50dp">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/sifreText"
+            style="@android:style/Widget.Button"
+            android:textColor="#E3E2E2"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Şifreyi Giriniz"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/login_color"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp">
+
+        </EditText>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/uyeOlBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Üye Ol"
+            android:textStyle="bold"
+            android:layout_marginTop="40dp"
+            android:onClick="uyeOlBtn"
+            android:clickable="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="#E3E2E2"
+            android:background="@drawable/button_orange_background"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ya da"
+            android:layout_marginTop="15sp"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="16sp">
+
+        </TextView>
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleBtn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:buttonSize="wide"
+            android:layout_marginTop="20dp">
+
+        </com.google.android.gms.common.SignInButton>
+    </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

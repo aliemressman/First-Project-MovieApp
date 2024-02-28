@@ -15,12 +15,12 @@ class OzelSheredPreferences {
         @Volatile private var instance : OzelSheredPreferences ?= null
         private val lock = Any()
         operator fun invoke(context : Context)  : OzelSheredPreferences = instance ?: synchronized(lock){
-            instance ?: ozelSheredPtreferencesYap(context).also {
+            instance ?: ozelSheredPreferencesYap(context).also {
                 instance = it
             }
         }
 
-        private fun ozelSheredPtreferencesYap(context: Context): OzelSheredPreferences{
+        private fun ozelSheredPreferencesYap(context: Context): OzelSheredPreferences{
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             return OzelSheredPreferences()
         }

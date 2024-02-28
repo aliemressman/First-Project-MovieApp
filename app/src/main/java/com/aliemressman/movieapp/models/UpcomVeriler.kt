@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-class DashboardUpcomVeriler (
+class UpcomVeriler (
 
     @ColumnInfo(name = "page")
     @SerializedName("page")

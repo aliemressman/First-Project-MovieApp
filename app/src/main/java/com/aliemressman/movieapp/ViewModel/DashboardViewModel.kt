@@ -6,10 +6,11 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.aliemressman.movieapp.models.DashboardResult
-import com.aliemressman.movieapp.models.DashboardUpcomVeriler
 import com.aliemressman.movieapp.models.GenresVeriler
 import com.aliemressman.movieapp.models.FilmDashboardVeriler
 import com.aliemressman.movieapp.models.Genres
+import com.aliemressman.movieapp.models.UpcomResult
+import com.aliemressman.movieapp.models.UpcomVeriler
 import com.aliemressman.movieapp.servis.FilmAPIServis
 import com.aliemressman.movieapp.servis.FilmDataBase
 import com.aliemressman.movieapp.util.OzelSheredPreferences
@@ -19,19 +20,18 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 
-class DashboardViewModel(application: Application): BaseViewModel(application) {
+class DashboardViewModel(application: Application) :BaseViewModel(application)
+{
 
-    private val context = getApplication<Application>().applicationContext
+   private val context = getApplication<Application>().applicationContext
 
-    val dashboardFilmVeriler = MutableLiveData<List<FilmDashboardVeriler>>()
-    val dashboardResultVeriler = MutableLiveData<List<DashboardResult>>()
 
     val detayYukleniyor = MutableLiveData<Boolean>()
     val hataMesaji = MutableLiveData<Boolean>()
 
+    val dashboardResultVeriler = MutableLiveData<List<DashboardResult>>()
     val dashBoardTurVeriler = MutableLiveData<List<Genres>>()
-    val dashBoardGenresVeriler = MutableLiveData<List<GenresVeriler>>()
-    val dashboardUpcomVeriler = MutableLiveData<List<DashboardResult>>()
+    val dashboardUpcomVeriler = MutableLiveData<List<UpcomResult>>()
 
     private val filmAPIServis = FilmAPIServis()
     private val disposable = CompositeDisposable()
@@ -57,7 +57,7 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
         getGenres()
         getUpcom()
     }
-    private fun verileriSQlitetanAl(){
+   private fun verileriSQlitetanAl(){
         detayYukleniyor.value = true
         launch {
             val filmDashboard = FilmDataBase(getApplication()).filmDao().getAllFilm()
@@ -66,14 +66,17 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
             val filmGenres = FilmDataBase(getApplication()).filmDao().getAllGenres()
             filmGenresVerileriGoster(filmGenres)
 
-            Toast.makeText(getApplication(),"Besinleri Room'dan aldık",Toast.LENGTH_LONG).show()
+            val filmUpcom = FilmDataBase(getApplication()).filmDao().getAllUpcom()
+            filmUpcomVerileriGoster(filmUpcom)
+
+            Toast.makeText(getApplication(),"filmleri Room'dan aldık",Toast.LENGTH_LONG).show()
         }
     }
     private fun getFilm(){
         detayYukleniyor.value = true
         Log.d("api", "yükleniyor")
         disposable.add(
-            filmAPIServis.getData()
+            filmAPIServis.getFilm()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<FilmDashboardVeriler>(){
@@ -105,7 +108,7 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
 
                         t.genres.let {
                             dashBoardTurVeriler.value = it
-                            sqliteGenresSakla(t.genres)
+                            sqliteGenresSakla(it)
                         }
                     }
 
@@ -125,12 +128,12 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
             filmAPIServis.getUpcom()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<FilmDashboardVeriler>(){
-                    override fun onSuccess(t: FilmDashboardVeriler) {
+                .subscribeWith(object : DisposableSingleObserver<UpcomVeriler>(){
+                    override fun onSuccess(t: UpcomVeriler) {
 
                         t.results?.let {
                             dashboardUpcomVeriler.value = it
-                            sqliteSakla(it)
+                            sqliteUpcomSakla(it)
                         }
                         detayYukleniyor.value = false
                         hataMesaji.value = false
@@ -156,8 +159,13 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
         detayYukleniyor.value = false
         hataMesaji.value = false
     }
+    private fun filmUpcomVerileriGoster(filmUpcomListesi : List<UpcomResult>) {
+        dashboardUpcomVeriler.value = filmUpcomListesi
+        detayYukleniyor.value = false
+        hataMesaji.value = false
+    }
 
-    private fun sqliteSakla(filmListesi : List<DashboardResult>){
+   private fun sqliteSakla(filmListesi : List<DashboardResult>){
         viewModelScope.launch {
             val dao = FilmDataBase(getApplication()).filmDao()
             dao.deleteAllFilm()
@@ -165,13 +173,13 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
             var i = 0
             while (i < filmListesi.size){
                 filmListesi[i].uuid = uuidListesi[i].toInt()
-                i = i + 1
+                i += 1
             }
             hataMesaji.value = false
             detayYukleniyor.value = false
             dashboardResultVeriler.value = filmListesi
+            filmDashboardVerileriGoster(filmListesi)
         }
-        filmDashboardVerileriGoster(filmListesi)
         ozelSheredPreferences.zamaniKaydet(System.nanoTime())
     }
 
@@ -183,13 +191,31 @@ class DashboardViewModel(application: Application): BaseViewModel(application) {
             var i = 0
             while (i < genresListesi.size){
                 genresListesi[i].uuid = uuidListesi[i].toInt()
-                i = i + 1
+                i += 1
             }
             hataMesaji.value = false
             detayYukleniyor.value = false
             dashBoardTurVeriler.value = genresListesi
+            filmGenresVerileriGoster(genresListesi)
         }
-        filmGenresVerileriGoster(genresListesi)
+        ozelSheredPreferences.zamaniKaydet(System.nanoTime())
+    }
+
+    private fun sqliteUpcomSakla(upcomListesi : List<UpcomResult>){
+        viewModelScope.launch {
+            val dao = FilmDataBase(getApplication()).filmDao()
+            dao.deleteUpcomAllFilm()
+            val uuidListesi =  dao.insertUpcomAll(*upcomListesi.toTypedArray())
+            var i = 0
+            while (i < upcomListesi.size){
+                upcomListesi[i].uuid = uuidListesi[i].toInt()
+                i += 1
+            }
+            hataMesaji.value = false
+            detayYukleniyor.value = false
+            dashboardUpcomVeriler.value = upcomListesi
+            filmUpcomVerileriGoster(upcomListesi)
+        }
         ozelSheredPreferences.zamaniKaydet(System.nanoTime())
     }
 }

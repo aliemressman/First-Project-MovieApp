@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aliemressman.movieapp.R
 import com.aliemressman.movieapp.models.DashboardResult
-import com.aliemressman.movieapp.models.FilmDashboardVeriler
 import com.aliemressman.movieapp.util.gorselIndir
 import com.aliemressman.movieapp.util.placeHolderYap
 
@@ -17,7 +16,7 @@ interface OnFilmClickListener {
 }
 
 class FilmAdapter(val filmListesi : ArrayList<DashboardResult>, private val listener: OnFilmClickListener) : RecyclerView.Adapter<FilmAdapter.FilmAdapter>() {
-    class FilmAdapter (itemView : View): RecyclerView.ViewHolder(itemView){
+    class FilmAdapter(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val baslikTextView = itemView.findViewById<TextView>(R.id.filmBaslık)
         val puanTextView = itemView.findViewById<TextView>(R.id.puanView)
         val posterImageView = itemView.findViewById<ImageView>(R.id.pic)
@@ -25,13 +24,13 @@ class FilmAdapter(val filmListesi : ArrayList<DashboardResult>, private val list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmAdapter {
 
-       val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.viewholder_film,parent,false)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.viewholder_film, parent, false)
         return FilmAdapter(view)
     }
 
     override fun getItemCount(): Int {
-       return filmListesi.size
+        return filmListesi.size
     }
 
     override fun onBindViewHolder(holder: FilmAdapter, position: Int) {
@@ -43,13 +42,13 @@ class FilmAdapter(val filmListesi : ArrayList<DashboardResult>, private val list
                 listener.onFilmClick(it)
             }
         }
-
-        val url = "https://image.tmdb.org/t/p/w500" + filmListesi.get(position).filmPoster
+        // Görselin linkini birbirine bağladık
+        val url = "https://image.tmdb.org/t/p/w500" + filmListesi[position].filmPoster
         holder.posterImageView.gorselIndir(url, placeHolderYap(holder.posterImageView.context))
 
     }
 
-    fun filmListesiniGuncelle(yeniFilmListesi :List<DashboardResult>){
+    fun filmListesiniGuncelle(yeniFilmListesi: List<DashboardResult>) {
         filmListesi.clear()
         filmListesi.addAll(yeniFilmListesi)
         notifyDataSetChanged()

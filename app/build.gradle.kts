@@ -4,6 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -46,6 +47,8 @@ android {
 
 dependencies {
 
+    implementation("com.google.android.gms:play-services-ads:22.6.0")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
     val lifeCycleExtensionVersion = "1.1.1"
     val supportVersion = "28.0.0"
     val retrofitVersion = "2.8.1"
@@ -81,4 +84,11 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:$glideVersion")
     implementation("androidx.preference:preference-ktx:$preference_version")
 
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
+
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation ("com.google.android.gms:play-services-ads:22.6.0")
 }

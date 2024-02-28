@@ -15,6 +15,7 @@ data class GenresVeriler(
     var uuid : Int = 0
 }
 
+@Entity
 data class Genres(
     @ColumnInfo(name = "id")
     @SerializedName("id")
